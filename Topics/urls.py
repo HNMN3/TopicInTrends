@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^my_topics/$', TopicParticular.as_view(), name='my_topics'),  # To see topics created by logged in user
     url(r'^comment_list/(?P<topic_id>[0-9]+)$',  # To see comment list for a particular topic
         CommentList.as_view(), name='comment_list'),
-    url(r'^comment_create/$', CommentCreate.as_view(),
+    url(r'^comment/$', CommentCreate.as_view(),
         name='comment_create'),  # To create a comment on a particular topic
     url(r'^comment_update/(?P<pk>[0-9]+)$', CommentUpdate.as_view(),
         name='comment_update'),  # To update a comment
