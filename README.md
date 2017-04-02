@@ -1,8 +1,6 @@
 **Topic In Trends**
 
-This project is created using Django Restful Framework. 
-In this project user can create their own topic, can get list of 
-available topics and topics created by them.
+This project is created using Django Restful Framework. In this project, the user can create their own topic, get a list of available topics and topics created by them.
 
 They can also comment on a particular topic and do a reply on the comment.
 
