@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from .models import Topic, Comment
 
 
+# Serializer for Comment model
 class CommentSerializer(serializers.ModelSerializer):
     comment_date = serializers.ReadOnlyField()
     comment_owner = serializers.ReadOnlyField(source='topic_owner.username')
@@ -19,6 +20,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('pk', 'comment', 'reply', 'comment_owner', 'comment_on', 'comment_date')
 
 
+# Serializer for Topic Model
 class TopicSerializer(serializers.ModelSerializer):
     topic_id = serializers.ReadOnlyField()
     topic_owner = serializers.ReadOnlyField(source='topic_owner.username')
@@ -29,6 +31,7 @@ class TopicSerializer(serializers.ModelSerializer):
         fields = ('topic_id', 'topic_name', 'topic_owner', 'created')
 
 
+# Serializer for User model ** not used anywhere
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

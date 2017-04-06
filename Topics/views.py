@@ -1,23 +1,16 @@
 # This file contains the different view for various operations
 
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render
-from django.http import HttpResponse
 from rest_framework import status
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.generics import ListCreateAPIView, UpdateAPIView, CreateAPIView, ListAPIView
-from rest_framework.views import APIView
 
-from Topics.serializers import TopicSerializer, CommentSerializer, UserSerializer
+from Topics.serializers import TopicSerializer, CommentSerializer
 from .models import Topic, Comment
 from .permissions import IsTopicOwnerOrNot, IsCommentOwnerOrNot
 from rest_framework import permissions
-from django.contrib.auth.models import User
 from rest_framework.response import Response
 
 
-# Create your views here.
-
+# This class allows to view all topics and create new topic
 class TopicList(ListCreateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
@@ -27,6 +20,7 @@ class TopicList(ListCreateAPIView):
         serializer.save(topic_owner=self.request.user)
 
 
+# This class allows to get topics created by a particular user
 class TopicParticular(ListAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
@@ -38,6 +32,7 @@ class TopicParticular(ListAPIView):
         return Response(s.data)
 
 
+# This class allows to create a new comment on a particular topic
 class CommentCreate(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -45,9 +40,10 @@ class CommentCreate(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(comment_owner=self.request.user,
-                        comment_on_topic=Topic.objects.get(pk=self.request.data.get('topic_id')))
+                        comment_on=Topic.objects.get(pk=self.request.data.get('topic_id')))
 
 
+# This class allows to view comments on a particular topic
 class CommentList(ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -60,6 +56,7 @@ class CommentList(ListAPIView):
         return Response(s.data)
 
 
+# This class allows to update a comment to its owner
 class CommentUpdate(UpdateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -67,6 +64,7 @@ class CommentUpdate(UpdateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsCommentOwnerOrNot,)
 
 
+# This class allows any authorized user to reply on a particular comment
 class DoReply(UpdateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

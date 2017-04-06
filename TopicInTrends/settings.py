@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Topics',
     'rest_framework',
+    'django.contrib.sites',
 
 ]
 
