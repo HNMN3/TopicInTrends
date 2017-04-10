@@ -1,6 +1,6 @@
 # Keep coding and change the world..And do not forget anything..Not Again..
 from django.conf.urls import url
-from .views import TopicList, CommentList, CommentUpdate, CommentCreate, TopicParticular, DoReply
+from .views import TopicList, CommentList, CommentUpdate, CommentCreate, TopicParticular, DoReply,GetAuthToken
 
 urlpatterns = [
     url(r'^topic_list/$', TopicList.as_view(), name='all_topics'),  # To create new topic and see all topics available
@@ -13,4 +13,5 @@ urlpatterns = [
         name='comment_update'),  # To update a comment
     url(r'^do_reply/(?P<comment_id>[0-9]+)$', DoReply.as_view(),
         name='do_reply'),  # to do a reply on particular comment
+    url(r'token/',GetAuthToken.as_view(),name='get_token')
 ]

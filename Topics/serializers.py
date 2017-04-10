@@ -29,10 +29,3 @@ class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
         fields = ('topic_id', 'topic_name', 'topic_owner', 'created')
-
-
-# Serializer for User model ** not used anywhere
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username')

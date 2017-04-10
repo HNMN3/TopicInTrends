@@ -1,5 +1,7 @@
 # This file contains the different view for various operations
+import datetime
 
+from django.utils.timezone import utc
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, UpdateAPIView, CreateAPIView, ListAPIView
 
@@ -8,6 +10,11 @@ from .models import Topic, Comment
 from .permissions import IsTopicOwnerOrNot, IsCommentOwnerOrNot
 from rest_framework import permissions
 from rest_framework.response import Response
+from django.utils import timezone
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 
 
 # This class allows to view all topics and create new topic
@@ -79,3 +86,14 @@ class DoReply(UpdateAPIView):
         c.save()
         s = CommentSerializer(c)
         return Response(s.data)
+
+
+class GetAuthToken(ObtainAuthToken):
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            data = serializer.validate(request.data)
+            token, created = Token.objects.get_or_create(user=data['user'])
+
+            return Response({'token': token.key})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
