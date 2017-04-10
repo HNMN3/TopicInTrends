@@ -9,7 +9,7 @@ They can also comment on a particular topic and send a reply on the comment.
 
 `Python`, `Django`, `REST`, `SQLite`
 
-****cd 
+**** 
 **Pre-requirements**
     
     Python >= 3.4.3
